@@ -19,8 +19,8 @@ const getData = async (parsedQuery) => {
   console.log(parsedQuery);
   // "http://localhost:8081/list2"
   // "http://localhost:8081/ica"
-  const response = await axios.get("http://localhost:8081/ica", {
-    params: { id: parsedQuery },
+  const response = await axios.get("http://localhost:8081/getPrice", {
+    params: { products: parsedQuery },
   });
   return response.data;
 };
@@ -71,36 +71,3 @@ btnGetPrice.addEventListener("click", async () => {
     }
   }
 });
-
-// Testing -responsListContainer-
-
-// test objects
-const testObj = {
-  store: "Ica",
-  shoppingList: [
-    {
-      price: 19,
-      productName: "Kvarg",
-    },
-    {
-      price: 19,
-      productName: "Apple",
-    },
-  ],
-};
-
-const testObj2 = {
-  store: "Coop",
-  shoppingList: [
-    {
-      price: 51,
-      productName: "Kvarg",
-    },
-    {
-      price: 65,
-      productName: "Apple",
-    },
-  ],
-};
-
-const testArray = [testObj, testObj2];
