@@ -14,16 +14,21 @@
       <h1>Shopping List</h1>
       <div class="input-container">
         <input type="text" id="input-field" />
-        <button id="add-btn" class="btn">Add</button>
       </div>
     </header>
     <div class="container">
       <main>
-        <div id="shopping-list-div">
-          <button id="complete-btn" class="btn">Complete</button>
+        <div id="added-list-div">
+          <div id="buttons-div">
+            <button id="clear-btn" class="btn">CLEAR</button>
+            <button id="complete-btn" class="btn">READY</button>
+            <button id="get-price-btn" class="btn disabled-btn">
+              GET PRICE!
+            </button>
+          </div>
+          <div id="added-products-div"></div>
         </div>
         <div id="result-container">
-          <button id="get-price-btn" class="btn">Get price</button>
           <div id="response-list"></div>
         </div>
       </main>

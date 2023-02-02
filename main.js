@@ -1,24 +1,26 @@
 "use strict";
 
 // Elements
-const btnAdd = document.getElementById("add-btn");
 const btnComplete = document.getElementById("complete-btn");
 const btnGetPrice = document.getElementById("get-price-btn");
+const btnClear = document.getElementById("clear-btn");
 
-const shoppingListContainer = document.getElementById("shopping-list-div");
+const shoppingListContainer = document.getElementById("added-list-div");
 const userInputField = document.getElementById("input-field");
 const shoppingResultContainer = document.getElementById("result-container");
 const responsListContainer = document.getElementById("response-list");
+const addedProductContainer = document.getElementById("added-products-div");
 
 //Variables
-const finishedShoppingList = [];
+let finishedShoppingList;
 let responseArray = [];
 
 // Functions
+const getAllShoppingListItems = () =>
+  document.querySelectorAll(".shopping-item");
+
 const getData = async (parsedQuery) => {
   console.log(parsedQuery);
-  // "http://localhost:8081/list2"
-  // "http://localhost:8081/ica"
   const response = await axios.get("http://localhost:8081/getPrice", {
     params: { products: parsedQuery },
   });
@@ -34,20 +36,36 @@ const parseParam = (lista) => {
 };
 
 // Buttons
-btnAdd.addEventListener("click", () => {
-  const paragraph = document.createElement("span");
-  paragraph.className = "shopping-item";
-  paragraph.innerText = userInputField.value;
-  shoppingListContainer.appendChild(paragraph);
+btnClear.addEventListener("click", () => {
+  btnGetPrice.classList.add("disabled-btn");
+  btnComplete.classList.remove("ready-btn");
+  const shoppingItems = getAllShoppingListItems();
+  while (responsListContainer.firstChild) {
+    responsListContainer.removeChild(responsListContainer.firstChild);
+  }
+  shoppingItems.forEach((element) => element.parentNode.removeChild(element));
+});
+
+userInputField.addEventListener("keypress", (event) => {
+  if (event.key === "Enter") {
+    const paragraph = document.createElement("p");
+    paragraph.className = "shopping-item";
+    paragraph.innerText = userInputField.value.toUpperCase();
+    addedProductContainer.appendChild(paragraph);
+    userInputField.value = "";
+  }
 });
 
 btnComplete.addEventListener("click", () => {
-  shoppingListContainer.style.border = "solid";
-  const shoppingItems = document.querySelectorAll(".shopping-item");
+  finishedShoppingList = [];
+  console.log("before shopping list", finishedShoppingList);
+  const shoppingItems = getAllShoppingListItems();
   for (let i = 0; i < shoppingItems.length; i++) {
     finishedShoppingList.push(shoppingItems[i].textContent);
   }
-  console.log("shopping list", finishedShoppingList);
+  console.log("after shopping list", finishedShoppingList);
+  btnComplete.classList.add("ready-btn");
+  btnGetPrice.classList.remove("disabled-btn");
 });
 
 btnGetPrice.addEventListener("click", async () => {
@@ -83,6 +101,7 @@ btnGetPrice.addEventListener("click", async () => {
       productGridDiv.appendChild(divProductInfo);
     }
   }
+  btnGetPrice.classList.add("disabled-btn");
 });
 
 const testObject = [
@@ -109,8 +128,8 @@ const testObject = [
       },
 
       {
-        productName: "Ost med kebab",
-        price: "177",
+        productName: "Ost med kebab allting på extra",
+        price: "1777",
       },
       { productName: "smör", price: "23" },
     ],

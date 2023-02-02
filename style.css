@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  color: #4d4c4c;
+  color: #333333;
   box-sizing: border-box;
   letter-spacing: -0.07em;
 }
@@ -9,15 +9,17 @@
 body {
   background-color: #bec4ab;
   font-family: sans-serif;
+  margin-bottom: 50px;
 }
 
 header {
   background-color: #aaaf9a;
   border-bottom: solid 5px;
+  margin-bottom: 30px;
 }
 
 h1 {
-  font-size: 42px;
+  font-size: 52px;
   text-transform: uppercase;
   text-align: center;
   font-style: italic;
@@ -26,16 +28,21 @@ h1 {
 
 h2 {
   font-size: 28px;
+  text-align: center;
 }
 
 p {
   font-size: 22px;
 }
 
+p.shopping-item {
+  font-weight: 800;
+}
+
 input {
-  height: 45px;
+  height: 35px;
   width: 50%;
-  font-size: 32px;
+  font-size: 22px;
   border: none;
   border-radius: 50px;
   padding: 20px;
@@ -56,8 +63,30 @@ input:focus {
   margin-bottom: 40px;
 }
 
+#added-products-div {
+  display: flex;
+  column-gap: 30px;
+  padding: 10px 0;
+}
+
+#added-list-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 22px;
+}
+
 .btn {
-  padding: 3px;
+  border: none;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 50px;
+}
+
+.btn:hover {
+  background-color: #aaaf9a;
+  font-weight: normal;
 }
 
 #input-field {
@@ -66,24 +95,40 @@ input:focus {
 
 #response-list {
   display: flex;
-  justify-content: space-evenly;
-  background-color: #b6b3b3;
+  flex-direction: column;
+  row-gap: 60px;
+  justify-content: space-space;
+  background-color: #b2f2ce;
 }
 
 .store-div {
-  background-color: #908d8d;
-  width: 25%;
-  text-align: center;
+  background-color: #e3afaf;
 }
 
 .product-info-div {
-  background-color: #7c7b7b;
+  background-color: #b6b6b6;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.product-info-div p {
+  width: 100%;
+  text-align: center;
 }
 
 .product-div {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+}
+
+.disabled-btn {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.ready-btn {
+  pointer-events: none;
+  background-color: #aaaf9a;
+  font-weight: normal;
 }
