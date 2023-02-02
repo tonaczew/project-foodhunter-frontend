@@ -8,7 +8,7 @@ const btnGetPrice = document.getElementById("get-price-btn");
 const shoppingListContainer = document.getElementById("shopping-list-div");
 const userInputField = document.getElementById("input-field");
 const shoppingResultContainer = document.getElementById("result-container");
-const responsListContainer = document.getElementById("respons-list");
+const responsListContainer = document.getElementById("response-list");
 
 //Variables
 const finishedShoppingList = [];
@@ -35,7 +35,7 @@ const parseParam = (lista) => {
 
 // Buttons
 btnAdd.addEventListener("click", () => {
-  const paragraph = document.createElement("p");
+  const paragraph = document.createElement("span");
   paragraph.className = "shopping-item";
   paragraph.innerText = userInputField.value;
   shoppingListContainer.appendChild(paragraph);
@@ -51,23 +51,68 @@ btnComplete.addEventListener("click", () => {
 });
 
 btnGetPrice.addEventListener("click", async () => {
+  /*
+  // axios GET request to API
   const parsedQuery = parseParam(finishedShoppingList);
   responseArray = await getData(parsedQuery);
-  const loopingArray = responseArray;
+  */
+
+  //looping array change for testing
+  const loopingArray = testObject;
 
   for (let i = 0; i < loopingArray.length; i++) {
+    const divStore = document.createElement("div");
+    const productGridDiv = document.createElement("div");
+    divStore.classList = "store-div";
+    productGridDiv.classList = "product-div";
     const paragraphStore = document.createElement("h2");
     paragraphStore.innerText = loopingArray[i].store;
-    responsListContainer.appendChild(paragraphStore);
+    divStore.appendChild(paragraphStore);
+    divStore.appendChild(productGridDiv);
+    responsListContainer.appendChild(divStore);
 
     for (let j = 0; j < loopingArray[i].shoppingList.length; j++) {
-      const paragraphProduct = document.createElement("span");
-      const paragraphPrice = document.createElement("span");
+      const divProductInfo = document.createElement("div");
+      divProductInfo.classList = "product-info-div";
+      const paragraphProduct = document.createElement("p");
+      const paragraphPrice = document.createElement("p");
       paragraphProduct.innerText = loopingArray[i].shoppingList[j].productName;
       paragraphPrice.innerText = `${loopingArray[i].shoppingList[j].price} kr`;
-      responsListContainer.appendChild(paragraphProduct);
-      responsListContainer.appendChild(paragraphPrice);
-      responsListContainer.appendChild(document.createElement("br"));
+      divProductInfo.appendChild(paragraphProduct);
+      divProductInfo.appendChild(paragraphPrice);
+      productGridDiv.appendChild(divProductInfo);
     }
   }
 });
+
+const testObject = [
+  {
+    store: "Ica",
+    shoppingList: [
+      {
+        productName: "kvarg",
+        price: "19",
+      },
+      {
+        productName: "Ost",
+        price: "152",
+      },
+      { productName: "smör", price: "25" },
+    ],
+  },
+  {
+    store: "Hemköp",
+    shoppingList: [
+      {
+        productName: "kvarg",
+        price: "21",
+      },
+
+      {
+        productName: "Ost med kebab",
+        price: "177",
+      },
+      { productName: "smör", price: "23" },
+    ],
+  },
+];
