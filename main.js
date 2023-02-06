@@ -16,6 +16,8 @@ let finishedShoppingList;
 let responseArray;
 
 // Functions
+const createHtmlElement = (element) => document.createElement(`${element}`);
+
 const increaseAmount = (price) => {
   if (price !== "-") return Number(price);
   else return 0;
@@ -44,6 +46,46 @@ const parseParam = (lista) => {
   return str.substring(0, str.length - 1);
 };
 
+const displayWebscrapingContent = (loopingObject) => {
+  for (let i = 0; i < loopingObject.length; i++) {
+    let amount = 0;
+    const divStore = createHtmlElement("div");
+    const productGridDiv = createHtmlElement("div");
+    divStore.classList = "store-div";
+    productGridDiv.classList = "product-div";
+    const paragraphStore = createHtmlElement("h2");
+    paragraphStore.innerText = loopingObject[i].store;
+    divStore.appendChild(paragraphStore);
+    divStore.appendChild(productGridDiv);
+    responsListContainer.appendChild(divStore);
+
+    for (let j = 0; j < loopingObject[i].shoppingList.length; j++) {
+      const divProductInfo = createHtmlElement("div");
+      divProductInfo.classList = "product-info-div";
+      const paragraphProduct = createHtmlElement("p");
+      const paragraphPrice = createHtmlElement("p");
+      paragraphProduct.innerText = loopingObject[i].shoppingList[j].productName;
+      const productPrice = loopingObject[i].shoppingList[j].price;
+      amount += increaseAmount(productPrice);
+      paragraphPrice.innerText = `${productPrice} kr`;
+      divProductInfo.appendChild(paragraphProduct);
+      divProductInfo.appendChild(paragraphPrice);
+      productGridDiv.appendChild(divProductInfo);
+    }
+    const divProductInfo = createHtmlElement("div");
+    divProductInfo.classList = "product-info-div";
+    const totalPriceLabel = createHtmlElement("p");
+    const totalPriceAmount = createHtmlElement("p");
+    totalPriceLabel.classList.add("tota-sum");
+    totalPriceAmount.classList.add("tota-sum");
+    totalPriceLabel.innerText = "Total";
+    totalPriceAmount.innerText = `${amount.toFixed(2)} kr`;
+    divProductInfo.appendChild(totalPriceLabel);
+    divProductInfo.appendChild(totalPriceAmount);
+    productGridDiv.appendChild(divProductInfo);
+  }
+};
+
 // Buttons
 btnClear.addEventListener("click", () => {
   btnGetPrice.classList.add("disabled-btn");
@@ -54,23 +96,18 @@ btnClear.addEventListener("click", () => {
     responsListContainer.removeChild(responsListContainer.firstChild);
   }
   shoppingItems.forEach((element) => element.parentNode.removeChild(element));
-
-  if (
-    shoppingResultContainer.contains(
-      document.getElementsByClassName("network-error-p")[0]
-    )
-  ) {
-    shoppingResultContainer.removeChild(
-      document.getElementsByClassName("network-error-p")[0]
-    );
+  const networkErrorParagraph =
+    document.getElementsByClassName("network-error-p")[0];
+  if (shoppingResultContainer.contains(networkErrorParagraph)) {
+    shoppingResultContainer.removeChild(networkErrorParagraph);
   }
 });
 
 userInputField.addEventListener("keypress", (event) => {
-  if (event.key === "Enter") {
-    const paragraph = document.createElement("p");
+  if (event.key === "Enter" && userInputField.value.trim().length >= 2) {
+    const paragraph = createHtmlElement("p");
     paragraph.className = "shopping-item";
-    paragraph.innerText = userInputField.value;
+    paragraph.innerText = userInputField.value.replace(",", ".");
     addedProductContainer.appendChild(paragraph);
     userInputField.value = "";
     paragraph.addEventListener("click", () => {
@@ -85,67 +122,28 @@ btnComplete.addEventListener("click", () => {
   for (let i = 0; i < shoppingItems.length; i++) {
     finishedShoppingList.push(shoppingItems[i].textContent);
   }
-  console.log("after shopping list", finishedShoppingList);
-  btnComplete.classList.add("ready-btn");
-  btnGetPrice.classList.remove("disabled-btn");
+  if (finishedShoppingList.length >= 1) {
+    btnComplete.classList.add("ready-btn");
+    btnGetPrice.classList.remove("disabled-btn");
+  }
 });
 
 btnGetPrice.addEventListener("click", async () => {
   btnGetPrice.classList.add("disabled-btn");
-  // axios GET request to API
 
+  // axios GET request to API
   const parsedQuery = parseParam(finishedShoppingList);
   responseArray = await getData(parsedQuery);
 
   if (typeof responseArray !== "string") {
     //looping array change for testing
     const loopingArray = responseArray;
-
-    for (let i = 0; i < loopingArray.length; i++) {
-      let amount = 0;
-      const divStore = document.createElement("div");
-      const productGridDiv = document.createElement("div");
-      divStore.classList = "store-div";
-      productGridDiv.classList = "product-div";
-      const paragraphStore = document.createElement("h2");
-      paragraphStore.innerText = loopingArray[i].store;
-      divStore.appendChild(paragraphStore);
-      divStore.appendChild(productGridDiv);
-      responsListContainer.appendChild(divStore);
-
-      //refactor
-      for (let j = 0; j < loopingArray[i].shoppingList.length; j++) {
-        const divProductInfo = document.createElement("div");
-        divProductInfo.classList = "product-info-div";
-        const paragraphProduct = document.createElement("p");
-        const paragraphPrice = document.createElement("p");
-        paragraphProduct.innerText =
-          loopingArray[i].shoppingList[j].productName;
-        const productPrice = loopingArray[i].shoppingList[j].price;
-        amount += increaseAmount(productPrice);
-        paragraphPrice.innerText = `${productPrice} kr`;
-        divProductInfo.appendChild(paragraphProduct);
-        divProductInfo.appendChild(paragraphPrice);
-        productGridDiv.appendChild(divProductInfo);
-      }
-      const divProductInfo = document.createElement("div");
-      divProductInfo.classList = "product-info-div";
-      const totalPriceLabel = document.createElement("p");
-      const totalPriceAmount = document.createElement("p");
-      totalPriceLabel.classList.add("tota-sum");
-      totalPriceAmount.classList.add("tota-sum");
-      totalPriceLabel.innerText = "Total";
-      totalPriceAmount.innerText = `${amount.toFixed(2)} kr`;
-      divProductInfo.appendChild(totalPriceLabel);
-      divProductInfo.appendChild(totalPriceAmount);
-      productGridDiv.appendChild(divProductInfo);
-    }
+    displayWebscrapingContent(loopingArray);
   } else {
-    const paragraph = document.createElement("p");
+    const paragraph = createHtmlElement("p");
     paragraph.classList.add("network-error-p");
     paragraph.innerText = "Network error! Try again!";
     shoppingResultContainer.appendChild(paragraph);
-    console.log("else:", responseArray);
   }
 });
 
@@ -173,7 +171,7 @@ const testObject = [
       },
 
       {
-        productName: "Ost med kebab allting på extra",
+        productName: "Ost",
         price: "1777",
       },
       { productName: "smör", price: "23" },
