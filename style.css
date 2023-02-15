@@ -142,7 +142,7 @@ input:focus {
 
 #result-container {
   width: 80%;
-  margin: 0 auto;
+  margin: 0 auto 60px auto;
 }
 
 .tota-sum {
@@ -162,4 +162,32 @@ input:focus {
   margin-top: 50px;
   font-size: 28px;
   font-style: italic;
+}
+
+.hide {
+  display: none;
+}
+
+#load-banner {
+  margin: auto;
+}
+
+.loader {
+  border: 16px solid #333333;
+  border-top: 16px solid #aaaf9a;
+  border-bottom: 16px solid #aaaf9a;
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  animation: spin 1.8s linear infinite;
+  opacity: 50%;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

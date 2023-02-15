@@ -128,13 +128,17 @@ btnComplete.addEventListener("click", () => {
   }
 });
 
+const loadBanner = document.getElementById("load-banner");
+
 btnGetPrice.addEventListener("click", async () => {
   btnGetPrice.classList.add("disabled-btn");
+  loadBanner.classList.toggle("hide");
 
   // axios GET request to API
   const parsedQuery = parseParam(finishedShoppingList);
   responseArray = await getData(parsedQuery);
 
+  loadBanner.classList.toggle("hide");
   if (typeof responseArray !== "string") {
     //looping array change for testing
     const loopingArray = responseArray;
