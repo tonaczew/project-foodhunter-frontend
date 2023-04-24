@@ -8,30 +8,15 @@ This is a simple web application that interacts with the [Food Hunter API](https
 
 ## Installation
 
-To get started with the Food Hunter frontend, you'll need to have the following installed on your machine:
+To use the Food Hunter frontend, you'll need to have the [Food Hunter API](https://github.com/tonaczew/project-foodhunter) running locally on your machine. You can follow the instructions in the API's README file to get it up and running.
 
-To get started with the Food Hunter frontend, you'll need to have the following installed on your machine:
+Once you have the API running, open the index.html file in your web browser to start using the Food Hunter frontend.
 
-- Node.js (version 12 or later)
-- npm (version 6 or later)
-
-Once you have these installed, you can clone the repository to your local machine by running the following command:
+If you wish to examine the source code or make modifications to the application, you can clone the repository to your local machine by running the following command:
 
 `git clone https://github.com/tonaczew/project-foodhunter-frontend.git`
 
-Next, navigate to the project directory and install the necessary dependencies by running:
-
-`npm install`
-
 ## Usage
-
-To use the Food Hunter frontend, you'll need to have the [Food Hunter API](https://github.com/tonaczew/project-foodhunter) running locally on your machine. You can follow the instructions in the API's README file to get it up and running.
-
-Once you have the API running, you can start the frontend application by running:
-
-`npm start`
-
-This will start the application on http://localhost:8080. You can open this URL in your web browser to access the Food Hunter frontend.
 
 To use the application, follow these steps:
 
