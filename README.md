@@ -4,7 +4,7 @@
 - Author: Philip Tonaczew 
 - Last update: February 9, 2023
 
-This is a simple web application that interacts with the [Food Hunter API](https://github.com/tonaczew/project-foodhunter) to help you find the best prices for your grocery list.
+This is a lightweight web application designed to showcase the capabilities of the [Food Hunter API](https://github.com/tonaczew/project-foodhunter). By utilizing the API, the application allows you to easily compare prices for the items on your grocery list across multiple stores. 
 
 ## Installation
 
@@ -15,6 +15,8 @@ Once you have the API running, open the index.html file in your web browser to s
 If you wish to examine the source code or make modifications to the application, you can clone the repository to your local machine by running the following command:
 
 `git clone https://github.com/tonaczew/project-foodhunter-frontend.git`
+
+This project is also hosted on GitHub Pages, allowing you to try it out without having to clone the repository or run it locally. You can access the live version of the project by visiting https://tonaczew.github.io/project-foodhunter-frontend
 
 ## Usage
 
