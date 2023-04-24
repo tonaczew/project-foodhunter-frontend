@@ -1,5 +1,9 @@
 # Food Hunter Frontend
 
+#### Information
+Author: Philip Tonaczew
+Last update: February 9, 2023
+
 This is a simple web application that interacts with the [Food Hunter API](https://github.com/tonaczew/project-foodhunter) to help you find the best prices for your grocery list.
 
 ## Installation
